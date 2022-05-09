@@ -6,6 +6,7 @@ export function Dashboard() {
   return (
     <Container>
       <Title>Dashboard</Title>
+      <Title>teste</Title>
     </Container>
   );
 }
