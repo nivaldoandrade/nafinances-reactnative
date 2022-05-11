@@ -1,12 +1,17 @@
 import styled from 'styled-components/native';
+import { FlatList } from 'react-native';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import {Feather} from '@expo/vector-icons';
+
+import {TransitionsListProps} from '.';
 
 
 export const Container = styled.View`
 	flex: 1;
 	background-color: ${({theme}) => theme.colors.background};
 `;
+
 
 export const Title = styled.Text`
 	font-family: ${({theme}) => theme.fonts.bold};
@@ -16,7 +21,7 @@ export const Title = styled.Text`
 
 export const Header = styled.View`
 	width: 100%;
-	height: ${RFPercentage(36)}px;
+	height: ${RFPercentage(40)}px;
 	background-color: ${({theme}) => theme.colors.primary};
 
 	padding: 0 24px;
@@ -27,7 +32,7 @@ export const HeaderWrapper = styled.View`
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	padding-top: 28px;
+	padding-top: ${RFValue(28)}px;
 `;
 
 export const User = styled.View`
@@ -63,4 +68,32 @@ export const UserName = styled.Text`
 export const Icon = styled(Feather)`
 	font-size: ${RFValue(24)}px;
 	color: ${({theme}) => theme.colors.secondary};
-` as unknown as typeof Feather;
+`;
+
+export const HighlightCards = styled.ScrollView.attrs({
+	horizontal: true,
+	contentContainerStyle: { paddingHorizontal: 24},
+	showsHorizontalScrollIndicator: false,
+})`
+	position: absolute;
+	top: ${RFPercentage(20)}px;
+`;
+
+export const Transitions = styled.View`
+	flex: 1;
+	padding: 0 24px;
+	margin-top: ${RFPercentage(11)}px;
+`;
+
+export const TitleTransition = styled.Text`
+	font-size: ${RFValue(18)}px;
+	color: ${({theme}) => theme.colors.text_dark};
+	margin-bottom: 17px;
+`;
+
+export const TransitionsList = styled(FlatList as new () => FlatList<TransitionsListProps>).attrs({
+	showsVerticalScrollIndicator: false,
+	contentContainerStyle: {
+		paddingBottom: getBottomSpace()
+	}
+})``;
