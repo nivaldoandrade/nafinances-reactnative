@@ -25,6 +25,7 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
 	justify-content: center;
 	padding: 16px 32px;
 	margin-top: 8px;
+	margin-bottom: 16px;
 
 	${({ theme, type, isActive }) => isActive && type === 'up' && css`
 		background-color: ${theme.colors.success_light};

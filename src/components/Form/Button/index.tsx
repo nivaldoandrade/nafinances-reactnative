@@ -2,10 +2,14 @@ import React from 'react';
 
 import { Container, Title } from './styles';
 
-export function Button() {
+interface ButtonProps {
+  title: string;
+}
+
+export function Button({ title }: ButtonProps) {
   return (
     <Container>
-      <Title>Enviar</Title>
+      <Title>{title}</Title>
     </Container>
   );
 }
