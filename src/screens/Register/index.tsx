@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { Modal } from 'react-native';
+
 import { Button } from '../../components/Form/Button';
-import { CategorySelect } from '../../components/Form/CategorySelect';
+import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
 import { Input } from '../../components/Form/Input';
 import { TransitionTypeButton } from '../../components/Form/TransitionTypeButton';
+import { CategorySelect } from '../CategorySelect';
 
 import {
   Container,
@@ -15,10 +18,23 @@ import {
 
 export function Register() {
   const [transitionType, setTransitionType] = useState('');
+  const [isOpenModalCategory, setIsOpenModalCategory] = useState(false);
+  const [category, setCategory] = useState({
+    key: 'category',
+    name: 'Categoria'
+  });
 
   function handleTransitionTypeSelect(type: 'up' | 'down') {
     console.log(type);
     setTransitionType(type);
+  }
+
+  function handleCloseCategorySelectModal() {
+    setIsOpenModalCategory(false);
+  }
+
+  function handleOpenCategorySelectModal() {
+    setIsOpenModalCategory(true);
   }
 
   return (
@@ -46,11 +62,21 @@ export function Register() {
               isActive={transitionType === 'down'}
             />
           </TransitionTypeButtons>
-          <CategorySelect title="Category" />
+          <CategorySelectButton
+            title={category.name}
+            onPress={handleOpenCategorySelectModal}
+          />
         </Fields>
 
         <Button title="Enviar" />
       </Form>
+      <Modal animationType="slide" visible={isOpenModalCategory}>
+        <CategorySelect
+          category={category}
+          closeSelectCategory={handleCloseCategorySelectModal}
+          setCategory={setCategory}
+        />
+      </Modal>
     </Container>
   );
 }

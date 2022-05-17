@@ -15,7 +15,26 @@ import {
   Footer
 } from './style';
 
-export function CategorySelect() {
+interface CategoryProps {
+  key: string;
+  name: string;
+}
+
+interface CategorySelectProps {
+  category: CategoryProps;
+  setCategory: (category: CategoryProps) => void;
+  closeSelectCategory: () => void;
+}
+
+export function CategorySelect({
+  category,
+  setCategory,
+  closeSelectCategory
+}: CategorySelectProps) {
+  function handleSelectCategory(category: CategoryProps) {
+    setCategory({ key: category.name, name: category.name });
+  }
+
   return (
     <Container>
       <Header>
@@ -27,7 +46,10 @@ export function CategorySelect() {
         data={categories}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <CategoryItem>
+          <CategoryItem
+            onPress={() => handleSelectCategory(item)}
+            isActive={category.key === item.key}
+          >
             <Icon name={item.icon} />
             <Name>{item.name}</Name>
           </CategoryItem>
@@ -36,7 +58,7 @@ export function CategorySelect() {
       />
 
       <Footer>
-        <Button title="Selecionar" />
+        <Button title="Selecionar" onPress={closeSelectCategory} />
       </Footer>
     </Container>
   );
