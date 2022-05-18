@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-native';
+import { useForm } from 'react-hook-form';
 
 import { Button } from '../../components/Form/Button';
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
 import { Input } from '../../components/Form/Input';
+import { InputForm } from '../../components/Form/InputForm';
 import { TransitionTypeButton } from '../../components/Form/TransitionTypeButton';
 import { CategorySelect } from '../CategorySelect';
 
@@ -16,6 +18,10 @@ import {
   TransitionTypeButtons
 } from './styles';
 
+interface FormData {
+  [name: string]: string;
+}
+
 export function Register() {
   const [transitionType, setTransitionType] = useState('');
   const [isOpenModalCategory, setIsOpenModalCategory] = useState(false);
@@ -23,6 +29,8 @@ export function Register() {
     key: 'category',
     name: 'Categoria'
   });
+
+  const { control, handleSubmit } = useForm<FormData>();
 
   function handleTransitionTypeSelect(type: 'up' | 'down') {
     console.log(type);
@@ -37,6 +45,16 @@ export function Register() {
     setIsOpenModalCategory(true);
   }
 
+  function handleRegister(formData: FormData) {
+    const data = {
+      ...formData,
+      transitionType,
+      category: category.name
+    };
+
+    console.log(data);
+  }
+
   return (
     <Container>
       <Header>
@@ -45,8 +63,8 @@ export function Register() {
 
       <Form>
         <Fields>
-          <Input placeholder="Nome" />
-          <Input placeholder="Preço" />
+          <InputForm placeholder="Nome" control={control} name="name" />
+          <InputForm placeholder="Preço" control={control} name="amount" />
 
           <TransitionTypeButtons>
             <TransitionTypeButton
@@ -68,7 +86,7 @@ export function Register() {
           />
         </Fields>
 
-        <Button title="Enviar" />
+        <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
       </Form>
       <Modal animationType="slide" visible={isOpenModalCategory}>
         <CategorySelect
