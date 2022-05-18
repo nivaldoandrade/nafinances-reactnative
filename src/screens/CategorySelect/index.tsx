@@ -32,7 +32,7 @@ export function CategorySelect({
   closeSelectCategory
 }: CategorySelectProps) {
   function handleSelectCategory(category: CategoryProps) {
-    setCategory({ key: category.name, name: category.name });
+    setCategory({ key: category.key, name: category.name });
   }
 
   return (
